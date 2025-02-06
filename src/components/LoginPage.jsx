@@ -1,10 +1,25 @@
+import { useEffect } from "react";
+import axios from "axios";
+
+
 function LoginPage({
   LoadingSpinner,
   login,
   isLoading,
   user,
-  setUser
+  setUser,
+  loginCheck,
+  setLoginMode
 }) {
+  useEffect(() => {
+    const token = document.cookie.replace(
+      /(?:(?:^|.*;\s*)userToken\s*\=\s*([^;]*).*$)|^.*$/,
+      "$1",
+    );
+    axios.defaults.headers.common['Authorization'] = token;
+    loginCheck();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -14,13 +29,14 @@ function LoginPage({
   };
   const handleKeyDown = (e) => {
     if (e.key == "Enter") {
+      setLoginMode(true);
       login();
     };
   };
 
   return (
     <>
-      {isLoading ? <LoadingSpinner /> : null}
+      {isLoading && <LoadingSpinner />}
       <div className="container">
         <div className="row">
           <div className="col-6 mx-auto my-5">
@@ -34,7 +50,10 @@ function LoginPage({
               <input type="password" className="form-control" id="exampleInputPassword1" name="password" value={user.password} onChange={handleInputChange} onKeyDown={handleKeyDown} />
             </div>
             <div className="d-flex justify-content-end">
-              <button type="submit" className="btn btn-primary" onClick={login}>登入</button>
+              <button type="submit" className="btn btn-primary" onClick={() => {
+                login();
+                setLoginMode(true);
+              }}>登入</button>
             </div>
           </div>
         </div>
