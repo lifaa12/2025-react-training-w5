@@ -72,6 +72,7 @@ function App() {
   const logOut = async () => {
     try {
       setIsLoading(true);
+      setLoginMode(false);
       const res = await axios.post(`${apiUrl}/v2/logout`);
       Swal.fire({
         title: "您已成功登出！",

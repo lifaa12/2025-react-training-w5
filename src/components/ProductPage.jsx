@@ -143,9 +143,9 @@ function ProductPage({
             }
           </tbody>
         </table>
+        <Pagination paginationData={paginationData} getProduct={getProduct} />
         {cartList.length === 0 ? <h3 className="text-center fw-bold">購物車目前是空的，趕緊去選購！</h3> : <CartList cartList={cartList} cartQtyLoading={cartQtyLoading} setCartQtyLoading={setCartQtyLoading} getCart={getCart} Toast={Toast} cartTotal={cartTotal} payModalOpen={payModalOpen} setCartPageLoading={setCartPageLoading} />}
       </div>
-      <Pagination paginationData={paginationData} getProduct={getProduct} />
     </>
   )
 }
